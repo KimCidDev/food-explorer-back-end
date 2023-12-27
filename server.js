@@ -2,6 +2,7 @@ require('express-async-errors');
 
 const express = require('express');
 const routes = require('./routes');
+const AppError = require('./utils/AppError');
 
 const database = require('./database/sqlite');
 
