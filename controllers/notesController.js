@@ -6,4 +6,4 @@ class NotesController {
   }
 }
 
-module.exports = NotesController
+module.exports = NotesController;
