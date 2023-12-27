@@ -1,8 +1,8 @@
 class NotesController {
   create(request, response) {
-    const { name, iceCreamFlavour } = request.body;
+    const { name, iceCreamFlavor } = request.body;
 
-    return response.json({ name, iceCreamFlavour });
+    return response.json({ name, iceCreamFlavor });
   }
 }
 
