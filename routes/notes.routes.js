@@ -5,6 +5,6 @@ const notesController = new NotesController();
 
 const notesRoutes = Router();
 
-notesRoutes.post('/notes', notesController.create);
+notesRoutes.post('/', notesController.create);
 
 module.exports = notesRoutes;
