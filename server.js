@@ -4,12 +4,12 @@ const express = require('express');
 const routes = require('./routes');
 const AppError = require('./utils/AppError');
 
-const database = require('./database/sqlite');
+const migrationsRun = require('./database/sqlite/migrations');
 
 const api = express();
 const PORT = 5555;
 
-database();
+migrationsRun();
 
 api.use(express.json());
 api.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`));
