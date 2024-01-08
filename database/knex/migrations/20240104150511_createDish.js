@@ -1,5 +1,5 @@
 exports.up = knex =>
-  knex.schema.createTable('notes', table => {
+  knex.schema.createTable('dishes', table => {
     table.increments('id');
     table.text('title');
     table.text('descriptuon');
@@ -9,4 +9,4 @@ exports.up = knex =>
     table.timestamp('updated_at').default(knex.fn.now());
   });
 
-exports.down = knex => knex.schema.dropTable('notes');
+exports.down = knex => knex.schema.dropTable('dishes');
