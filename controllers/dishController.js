@@ -1,7 +1,13 @@
+const AppError = require('../utils/AppError');
+
+const knex = require('../database/knex');
+
 class DishController {
   async create(request, response) {
     const { name, description } = request.body;
     const { id } = request.params;
+
+    const database = 
 
     return response.json({ name, description });
   }
