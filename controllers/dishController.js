@@ -1,9 +1,11 @@
 class DishController {
   async create(request, response) {
-    const { name, iceCreamFlavor } = request.body;
+    const { name, description } = request.body;
+    const { id } = request.params;
 
-    return response.json({ name, iceCreamFlavor });
+    return response.json({ name, description });
   }
+
   update(request, response) {
     const { name, iceCreamFlavor } = request.body;
 
