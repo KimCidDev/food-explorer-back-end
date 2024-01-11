@@ -26,10 +26,12 @@ class DishController {
     return response.json({ name, description, dish_id });
   }
 
-  update(request, response) {
-    const { name, iceCreamFlavor } = request.body;
+  async index(request, response) {
+    const { user_id } = request.query;
 
-    return response.json({ name, iceCreamFlavor });
+    const dishes = await knex('dishes').where({ user_id }).orderBy('name');
+
+    return response.json(dishes);
   }
   async show(request, response) {
     const { id } = request.params;
