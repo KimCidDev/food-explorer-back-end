@@ -3,7 +3,6 @@ const { hash, compare } = require('bcrypt');
 const AppError = require('../utils/AppError');
 
 const sqliteConnection = require('../database/sqlite');
-const { param } = require('../routes/user.routes');
 
 class UserController {
   async create(request, response) {
@@ -61,7 +60,7 @@ class UserController {
       const comparePasswords = await compare(password, old_password);
 
       if (!comparePasswords) {
-        throw new AppError("A senha informada não está correta");
+        throw new AppError('A senha informada não está correta');
       }
     }
 

@@ -5,6 +5,6 @@ const dishController = new DishController();
 
 const notesRoutes = Router();
 
-notesRoutes.post('/', dishController.create);
+notesRoutes.post('/:user_id', dishController.create);
 
 module.exports = notesRoutes;
