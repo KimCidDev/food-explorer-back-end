@@ -3,8 +3,10 @@ const { Router } = require('express');
 const DishController = require('../controllers/dishController');
 const dishController = new DishController();
 
-const notesRoutes = Router();
+const dishesRoutes = Router();
 
-notesRoutes.post('/:user_id', dishController.create);
+dishesRoutes.post('/:user_id', dishController.create);
+dishesRoutes.get('/:id', dishController.show);
+dishesRoutes.delete('/:id', dishController.delete);
 
-module.exports = notesRoutes;
+module.exports = dishesRoutes;

@@ -31,15 +31,21 @@ class DishController {
 
     return response.json({ name, iceCreamFlavor });
   }
-  show(request, response) {
-    const { name, iceCreamFlavor } = request.body;
+  async show(request, response) {
+    const { id } = request.params;
 
-    return response.json({ name, iceCreamFlavor });
+    const dish = await knex('dishes').where({ id }).first();
+    const tags = await knex('tags').where({ user_id: id }).orderBy('name');
+    console.log(tags);
+
+    return response.json({ ...dish, tags });
   }
-  delete(request, response) {
-    const { name, iceCreamFlavor } = request.body;
+  async delete(request, response) {
+    const { id } = request.params;
 
-    return response.json({ name, iceCreamFlavor });
+    await knex('dishes').where({ id }).delete();
+
+    return response.json();
   }
 }
 
