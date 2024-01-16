@@ -27,14 +27,22 @@ class DishController {
   }
 
   async index(request, response) {
-    const { user_id, name } = request.query;
+    const { user_id, name, tags } = request.query;
 
-    const dishes = await knex('dishes')
-      .where({ user_id })
-      .whereLike('name', `%${name}%`)
-      .orderBy('name');
+    let dishes;
 
-    return response.json(dishes);
+    if (tags) {
+      const targetTag = tags.split(',').map(tag => tag.trim());
+
+      dishes = await knex('tags').whereIn('name', targetTag);
+    } else {
+      dishes = await knex('dishes')
+        .where({ user_id })
+        .whereLike('name', `%${name}%`)
+        .orderBy('name');
+    }
+
+    return response.json({ dishes });
   }
   async show(request, response) {
     const { id } = request.params;
