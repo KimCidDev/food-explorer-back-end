@@ -4,7 +4,7 @@ const AppError = require('../utils/AppError');
 
 const sqliteConnection = require('../database/sqlite');
 
-class UserController {
+class sessionController {
   async create(request, response) {
     const { name, email, password } = request.body;
 
@@ -76,4 +76,4 @@ class UserController {
   }
 }
 
-module.exports = UserController;
+module.exports = sessionController;
