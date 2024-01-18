@@ -60,7 +60,7 @@ class UserController {
       const comparePasswords = await compare(password, old_password);
 
       if (!comparePasswords) {
-        throw new AppError("A senha informada não está correta");
+        throw new AppError('A senha informada não está correta');
       }
     }
 
@@ -73,6 +73,8 @@ class UserController {
       WHERE id = (?)`,
       [user.name, user.email]
     );
+
+    return response.json({ user });
   }
 }
 
