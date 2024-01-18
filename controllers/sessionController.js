@@ -2,6 +2,9 @@ const AppError = require('../utils/AppError');
 
 const { compare } = require('bcrypt');
 
+const authConfig = require('../configs/auth');
+const { sign } = require('jsonwebtoken');
+
 const knex = require('../database/knex');
 
 class sessionController {
@@ -24,11 +27,18 @@ class sessionController {
     const passwordMatch = await compare(password, user.password);
     console.log(passwordMatch);
 
+    const { secret, expiresIn } = authConfig.jwt;
+    console.log(secret, expiresIn);
+    const token = sign({}, secret, {
+      subject: String(user.id),
+      expiresIn
+    });
+
     if (!passwordMatch) {
       throw new AppError('Perdão, a senha não é a mesma', 401);
     }
 
-    return response.json(user);
+    return response.json({ user, token });
   }
 }
 
