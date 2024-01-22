@@ -1,9 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const uploadConfig = require('../configs/upload');
-const { diskStorage } = require('multer');
 
-class diskStorage {
+class DiskStorage {
   async saveFile(file) {
     await fs.promises.rename(
       path.resolve(uploadConfig.TMP_FOLDER, file),
@@ -26,4 +25,4 @@ class diskStorage {
   }
 }
 
-module.exports = diskStorage;
+module.exports = DiskStorage;
