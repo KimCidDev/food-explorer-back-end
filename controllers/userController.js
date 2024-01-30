@@ -9,9 +9,12 @@ class UserController {
     const { name, email, password } = request.body;
 
     const database = await sqliteConnection();
-    const isThereUser = await database.get('SELECT * FROM users WHERE (?)', [
-      email
-    ]);
+    const isThereUser = await database.get(
+      'SELECT * FROM users WHERE email = (?)',
+      [email]
+    );
+
+    console.log(isThereUser);
 
     if (isThereUser) {
       throw new AppError(
