@@ -3,6 +3,8 @@ exports.up = knex =>
     table.increments('id');
     table.text('name');
     table.text('description');
+    table.text('price');
+    table.text('dishImg').defaultTo(null);
     table.integer('user_id').references('id').inTable('users');
 
     table.timestamp('created_at').default(knex.fn.now());
