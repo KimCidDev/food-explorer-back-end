@@ -54,14 +54,15 @@ class DishController {
     return response.json({ dishes });
   }
   async show(request, response) {
-    const { id } = request.params;
+    const user_id = request.user.id;
 
-    const dish = await knex('dishes').where({ id }).first();
-    const tags = await knex('tags').where({ user_id: id }).orderBy('name');
+    const dish = await knex('dishes').where({ id: user_id }).first();
+    const tags = await knex('tags').where({ user_id }).orderBy('name');
     console.log(tags);
 
     return response.json({ ...dish, tags });
   }
+
   async delete(request, response) {
     const { id } = request.params;
 

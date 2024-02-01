@@ -3,7 +3,6 @@ const { verify } = require('jsonwebtoken');
 const AppError = require('../utils/AppError');
 
 const authConfig = require('../configs/auth');
-const auth = require('../configs/auth');
 
 function authenticate(request, response, next) {
   const authHeader = request.headers.authorization;
