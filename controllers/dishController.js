@@ -43,24 +43,26 @@ class DishController {
         .whereLike('dishes.name', `%${name}%`)
         .whereIn('tags.name', targetTag)
         .innerJoin('dishes', 'dishes.id', 'tags.dish_id')
+        .groupBy('dishes.id')
         .orderBy('dishes.name');
     } else {
-      dishes = await knex('dishes')
-        .where({ user_id })
-        .whereLike('name', `%${name}%`)
-        .orderBy('name');
+      dishes = await knex('dishes').where({ user_id }).orderBy('name');
+      console.log(dishes);
     }
 
-    return response.json({ dishes });
+    return response.json(dishes);
   }
   async show(request, response) {
+    const { id } = request.params;
     const user_id = request.user.id;
 
-    const dish = await knex('dishes').where({ id: user_id }).first();
-    const tags = await knex('tags').where({ user_id }).orderBy('name');
-    console.log(tags);
+    const dish = await knex('dishes').where({ id, user_id }).first();
+    console.log(dish);
+    const tags = await knex('tags')
+      .where({ dish_id: id, user_id })
+      .orderBy('name');
 
-    return response.json({ ...dish, tags });
+    return response.json({ dish, tags });
   }
 
   async delete(request, response) {
