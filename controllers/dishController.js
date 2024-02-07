@@ -4,13 +4,14 @@ const knex = require('../database/knex');
 
 class DishController {
   async create(request, response) {
-    const { name, description, price, tags } = request.body;
+    const { name, description, price, category, tags } = request.body;
     const user_id = request.user.id;
 
     const [dish_id] = await knex('dishes').insert({
       name,
       description,
       price,
+      category,
       user_id
     });
 
@@ -24,7 +25,7 @@ class DishController {
 
     await knex('tags').insert(tagInsertion);
 
-    return response.json({ name, description, price, dish_id });
+    return response.json({ name, description, price, category, dish_id });
   }
 
   async index(request, response) {
