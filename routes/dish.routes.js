@@ -16,8 +16,8 @@ const dishesRoutes = Router();
 dishesRoutes.use(authenticate);
 
 dishesRoutes.post('/', dishController.create);
-dishesRoutes.get('/:id', authenticate, dishController.show);
-dishesRoutes.get('/', authenticate, dishController.index);
+dishesRoutes.get('/', dishController.index);
+dishesRoutes.get('/:id', dishController.show);
 dishesRoutes.delete('/:id', dishController.delete);
 dishesRoutes.patch(
   '/dishImg',
