@@ -48,7 +48,7 @@ class DishController {
         .orderBy('dishes.name');
     } else {
       dishes = await knex('dishes').where({ user_id }).orderBy('name');
-      console.log(dishes);
+      console.log('xis salada');
     }
 
     return response.json(dishes);

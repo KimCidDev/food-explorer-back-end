@@ -9,7 +9,7 @@ const knex = require('../database/knex');
 
 class sessionController {
   async create(request, response) {
-    const { name, email, password } = request.body;
+    const { email, password } = request.body;
 
     const user = await knex('users').where({ email }).first();
 
