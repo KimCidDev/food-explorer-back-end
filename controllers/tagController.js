@@ -4,7 +4,7 @@ class TagController {
   async index(request, response) {
     const user_id = request.user.id;
 
-    const tagList = await knex('tags').where({ user_id }).orderBy('name');
+    const tagList = await knex('tags').where({ user_id }).groupBy('name');
 
     return response.json({ tagList });
   }

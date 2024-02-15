@@ -41,13 +41,16 @@ class DishController {
       dishes = await knex('tags')
         .select(['dishes.id', 'dishes.name', 'dishes.user_id'])
         .where('dishes.user_id', user_id)
-        .whereLike('dishes.name', `%${name}%`)
+        .whereLike('name', `%${name}%`)
         .whereIn('tags.name', targetTag)
         .innerJoin('dishes', 'dishes.id', 'tags.dish_id')
         .groupBy('dishes.id')
         .orderBy('dishes.name');
     } else {
-      dishes = await knex('dishes').where({ user_id }).orderBy('name');
+      dishes = await knex('dishes')
+        .where({ user_id })
+        .whereLike('name', `%${name}%`)
+        .orderBy('name');
       console.log('xis salada');
     }
 
