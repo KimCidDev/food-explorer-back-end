@@ -47,8 +47,8 @@ class DishController {
         .groupBy('dishes.id')
         .orderBy('dishes.name');
     } else {
+      // aqu
       dishes = await knex('dishes')
-        .where({ user_id })
         .whereLike('name', `%${name}%`)
         .orderBy('name');
       console.log('xis salada');
