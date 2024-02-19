@@ -57,11 +57,9 @@ class DishController {
     const { id } = request.params;
     const user_id = request.user.id;
 
-    const dish = await knex('dishes').where({ id, user_id }).first();
+    const dish = await knex('dishes').where({ id }).first();
     console.log(dish);
-    const tags = await knex('tags')
-      .where({ dish_id: id, user_id })
-      .orderBy('name');
+    const tags = await knex('tags').where({ dish_id: id }).orderBy('name');
 
     return response.json({ dish, tags });
   }
