@@ -30,32 +30,29 @@ class DishController {
 
   async index(request, response) {
     const { name, tags } = request.query;
-    const user_id = request.user.id;
 
     let dishes;
 
     if (tags) {
       const targetTag = tags.split(',').map(tag => tag.trim());
-      console.log(targetTag);
 
-      dishes = await knex('tags')
-        .select(['dishes.id', 'dishes.name', 'dishes.user_id'])
-        .where('dishes.user_id', user_id)
-        .whereLike('name', `%${name}%`)
+      dishes = await knex('dishes')
+        .select(['dishes.id', 'dishes.name'])
+        .where('name', 'like', `%${name}%`)
+        .innerJoin('tags', 'dishes.id', 'tags.dish_id')
         .whereIn('tags.name', targetTag)
-        .innerJoin('dishes', 'dishes.id', 'tags.dish_id')
         .groupBy('dishes.id')
         .orderBy('dishes.name');
     } else {
-      // aqu
       dishes = await knex('dishes')
-        .whereLike('name', `%${name}%`)
+        .where('name', 'like', `%${name}%`)
         .orderBy('name');
-      console.log('xis salada');
+      console.log(dishes);
     }
 
     return response.json(dishes);
   }
+
   async show(request, response) {
     const { id } = request.params;
     const user_id = request.user.id;

@@ -20,7 +20,7 @@ dishesRoutes.get('/', dishController.index);
 dishesRoutes.get('/:id', dishController.show);
 dishesRoutes.delete('/:id', dishController.delete);
 dishesRoutes.patch(
-  '/dishImg',
+  '/dishImg/:id',
   authenticate,
   upload.single('dishImg'),
   dishImgController.update

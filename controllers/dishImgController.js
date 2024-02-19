@@ -4,12 +4,11 @@ const DiskStorage = require('../providers/diskStorage');
 
 class dishImgController {
   async update(request, response) {
-    const user_id = request.user.id;
+    const { id } = request.params;
     const dishFileName = request.file.filename;
 
     const diskStorage = new DiskStorage();
-
-    const dish = await knex('dishes').where({ user_id }).first();
+    const dish = await knex('dishes').where({ id }).first();
     console.log(dish);
 
     if (!dish) {
@@ -26,7 +25,7 @@ class dishImgController {
     const fileName = await diskStorage.saveFile(dishFileName);
     dish.dishImg = fileName;
 
-    await knex('dishes').update(dish).where({ id: user_id });
+    await knex('dishes').where({ id }).update(dish);
 
     return response.json(dish);
   }
