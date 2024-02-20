@@ -43,11 +43,13 @@ class DishController {
         .whereIn('tags.name', targetTag)
         .groupBy('dishes.id')
         .orderBy('dishes.name');
-    } else {
+    } else if (name) {
       dishes = await knex('dishes')
         .where('name', 'like', `%${name}%`)
         .orderBy('name');
       console.log(dishes);
+    } else {
+      dishes = await knex('dishes').orderBy('name');
     }
 
     return response.json(dishes);
