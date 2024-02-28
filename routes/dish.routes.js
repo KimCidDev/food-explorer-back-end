@@ -18,6 +18,8 @@ dishesRoutes.use(authenticate);
 dishesRoutes.post('/', dishController.create);
 dishesRoutes.get('/', dishController.index);
 dishesRoutes.get('/:id', dishController.show);
+dishesRoutes.put('/:id', dishController.update);
+
 dishesRoutes.delete('/:id', dishController.delete);
 dishesRoutes.patch(
   '/dishImg/:id',

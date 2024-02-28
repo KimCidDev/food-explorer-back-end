@@ -28,6 +28,28 @@ class DishController {
     return response.json({ name, description, price, category, dish_id });
   }
 
+  async update(request, response) {
+    const { id, name, description, price, category } = request.body;
+
+    const dish = await knex('dishes').where({ id }).first();
+
+    if (!dish) {
+      throw new AppError('Prato não encontrado');
+    }
+
+    const updatedDish = {
+      id: dish.id,
+      name: name || dish.name,
+      description: description || dish.description,
+      price: price || dish.price,
+      category: category || dish.category
+    };
+
+    await knex('dishes').where({ id }).update(updatedDish);
+
+    return response.json({ dish: updatedDish });
+  }
+
   async index(request, response) {
     const { name, tags } = request.query;
 
