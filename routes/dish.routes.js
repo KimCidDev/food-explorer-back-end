@@ -16,6 +16,11 @@ const dishesRoutes = Router();
 dishesRoutes.use(authenticate);
 
 dishesRoutes.post('/', dishController.create);
+dishesRoutes.post(
+  '/upload',
+  upload.single('dishImg'),
+  dishImgController.create
+);
 dishesRoutes.get('/', dishController.index);
 dishesRoutes.get('/:id', dishController.show);
 dishesRoutes.put('/:id', dishController.update);

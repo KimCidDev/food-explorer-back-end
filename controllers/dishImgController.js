@@ -3,6 +3,21 @@ const AppError = require('../utils/AppError');
 const DiskStorage = require('../providers/diskStorage');
 
 class dishImgController {
+  async create(request, response) {
+    try {
+      const dishFileName = request.file.filename;
+
+      const diskStorage = new DiskStorage();
+
+      const fileName = await diskStorage.saveFile(dishFileName);
+
+      return response.json({ fileName });
+    } catch (error) {
+      console.error(error);
+      return response.status(500).json({ message: 'Internal server error' });
+    }
+  }
+
   async update(request, response) {
     const { id } = request.params;
     const dishFileName = request.file.filename;
