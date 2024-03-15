@@ -5,6 +5,7 @@ exports.up = knex =>
     table.text('description');
     table.text('price');
     table.text('category');
+    table.integer('quantity').defaultTo(1);
     table.text('dishImg').defaultTo(null);
     table.integer('user_id').references('id').inTable('users');
 
