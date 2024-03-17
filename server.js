@@ -1,4 +1,5 @@
 require('express-async-errors');
+require('dotenv/config');
 
 const express = require('express');
 const cors = require('cors');
@@ -9,7 +10,7 @@ const uploadConfig = require('./configs/upload');
 const migrationsRun = require('./database/sqlite/migrations');
 
 const api = express();
-const PORT = 5555;
+const PORT = process.env.PORT;
 api.use(cors()); // para lidar com as requisições do front
 
 migrationsRun();
