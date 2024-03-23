@@ -1,5 +1,7 @@
 # FaveMeal Backend 🥩🔪
 
+[Check it out!](https://favemeal.netlify.app/)
+
 This repository contains the backend codebase for the FaveMeal web app. The backend is responsible for handling various requests from users and administrators, managing user authentication, and providing necessary data to the frontend.
 
 ## Toolbox 🧰
