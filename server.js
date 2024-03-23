@@ -10,7 +10,7 @@ const uploadConfig = require('./configs/upload');
 const migrationsRun = require('./database/sqlite/migrations');
 
 const api = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 api.use(cors()); // para lidar com as requisições do front
 
 migrationsRun();
