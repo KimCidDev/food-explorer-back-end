@@ -1,8 +1,8 @@
-# FaveMeal Backend
+# FaveMeal Backend 🥩🔪
 
 This repository contains the backend codebase for the FaveMeal web app. The backend is responsible for handling various requests from users and administrators, managing user authentication, and providing necessary data to the frontend.
 
-## Toolbox
+## Toolbox 🧰
 
 - Node.js;
 - Express.js;
@@ -13,7 +13,7 @@ This repository contains the backend codebase for the FaveMeal web app. The back
 - pm2;
 - SQLite;
 
-## Installation
+## Installation 🤔
 
 1. Clone the repository:
 
@@ -41,7 +41,7 @@ npm install
 npm start
 ```
 
-## API Endpoints
+## API Endpoints 🛣️
 
 - POST /api/users/register: Register a new user.
 - POST /api/users/login: Log in as a user.
@@ -54,4 +54,4 @@ npm start
 
 ## Contributors
 
-Your Name
+KimCidDev
