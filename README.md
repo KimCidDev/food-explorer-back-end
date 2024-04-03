@@ -56,7 +56,7 @@ npm start
 - PUT /api/dishes/:dishId: Atualizar um prato (só admin).
 - DELETE /api/dishes/:dishId: Remover um prato (só admin).
 
-## Contributors
+## Contribuidor
 
 KimCidDev
 
