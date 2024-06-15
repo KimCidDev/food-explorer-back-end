@@ -6,16 +6,20 @@ const cors = require('cors');
 const routes = require('./routes');
 const AppError = require('./utils/AppError');
 const uploadConfig = require('./configs/upload');
-
-const migrationsRun = require('./database/sqlite/migrations');
+const knex = require('./database/knex');
 
 const api = express();
 const PORT = process.env.PORT || 3000;
-api.use(cors()); // para lidar com as requisições do front
 
-migrationsRun();
-
+api.use(cors());
 api.use(express.json());
+
+// Run migrations
+knex.migrate
+  .latest()
+  .then(() => console.log('Database migrated'))
+  .catch(error => console.error('Migration failed:', error));
+
 api.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`));
 
 api.use('/files', express.static(uploadConfig.UPLOADS_FOLDER));
@@ -29,7 +33,7 @@ api.use((error, request, response, next) => {
     });
   }
 
-  console.log(error);
+  console.error(error);
 
   return response.status(500).json({
     status: 'error',
