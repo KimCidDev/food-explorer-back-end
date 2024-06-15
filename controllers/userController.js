@@ -1,20 +1,12 @@
 const { hash, compare } = require('bcrypt');
-
 const AppError = require('../utils/AppError');
-
-const sqliteConnection = require('../database/sqlite');
+const knex = require('../database/knex');
 
 class UserController {
   async create(request, response) {
     const { name, email, password, isAdmin } = request.body;
 
-    const database = await sqliteConnection();
-    const isThereUser = await database.get(
-      'SELECT * FROM users WHERE email = (?)',
-      [email]
-    );
-
-    console.log(isThereUser);
+    const isThereUser = await knex('users').where({ email }).first();
 
     if (isThereUser) {
       throw new AppError(
@@ -24,10 +16,12 @@ class UserController {
 
     const hashedPassword = await hash(password, 8);
 
-    await database.run(
-      'INSERT INTO users (name, email, password, isAdmin) VALUES (?, ?, ?, ?)',
-      [name, email, hashedPassword, isAdmin]
-    );
+    await knex('users').insert({
+      name,
+      email,
+      password: hashedPassword,
+      isAdmin
+    });
 
     return response.status(201).json();
   }
@@ -36,19 +30,13 @@ class UserController {
     const { name, email, password, old_password } = request.body;
     const user_id = request.user.id;
 
-    const database = await sqliteConnection();
-    const user = await database.get('SELECT * FROM users WHERE id = (?)', [
-      user_id
-    ]);
+    const user = await knex('users').where({ id: user_id }).first();
 
     if (!user) {
       throw new AppError('Usuário não encontrado');
     }
 
-    const userWithUpdatedEmail = await database.get(
-      'SELECT * FROM users WHERE email = (?)',
-      [email]
-    );
+    const userWithUpdatedEmail = await knex('users').where({ email }).first();
 
     if (userWithUpdatedEmail && userWithUpdatedEmail.id !== user.id) {
       throw new AppError('Este email já está e uso');
@@ -67,20 +55,18 @@ class UserController {
       if (!comparePasswords) {
         throw new AppError('A senha informada não está correta');
       }
+
+      user.password = await hash(password, 8);
     }
 
-    user.password = await hash(password, 8);
-
-    await database.run(
-      `
-      UPDATE users SET
-      name = ?,
-      email = ?,
-      password = ?,
-      updated_at = DATETIME('now')
-      WHERE id = ?`,
-      [user.name, user.email, user.password, user_id]
-    );
+    await knex('users')
+      .update({
+        name: user.name,
+        email: user.email,
+        password: user.password,
+        updated_at: knex.fn.now()
+      })
+      .where({ id: user_id });
 
     return response.json({ user });
   }
