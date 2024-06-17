@@ -6,19 +6,22 @@ class PaymentController {
     const { items } = request.body;
 
     try {
+      // Map items to Stripe line items format
+      const lineItems = items.map(item => ({
+        price_data: {
+          currency: 'cad',
+          product_data: {
+            name: item.name
+          },
+          unit_amount: Math.round(item.price * 100) // Ensure price is in cents
+        },
+        quantity: item.quantity
+      }));
+
+      // Create checkout session
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
-        line_items: items.map(item => ({
-          price_data: {
-            currency: 'cad',
-            product_data: {
-              name: item.name,
-              id: item.id
-            },
-            unit_amount: item.price * 100
-          },
-          quantity: item.quantity
-        })),
+        line_items: lineItems,
         mode: 'payment',
         success_url: `${process.env.CLIENT_URL}/success`,
         cancel_url: `${process.env.CLIENT_URL}/cancel`
@@ -26,7 +29,7 @@ class PaymentController {
 
       return response.json({ id: session.id });
     } catch (error) {
-      console.error(error);
+      console.error('Error creating checkout session:', error);
       throw new AppError('Error creating checkout session', 500);
     }
   }
