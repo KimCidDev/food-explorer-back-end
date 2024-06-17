@@ -13,7 +13,7 @@ class PaymentController {
           product_data: {
             name: item.name
           },
-          unit_amount: Math.round(item.price * 100) // Ensure price is in cents
+          unit_amount: item.price // Ensure price is in cents
         },
         quantity: item.quantity
       }));
