@@ -11,7 +11,20 @@ const knex = require('./database/knex');
 const api = express();
 const PORT = process.env.PORT || 3000;
 
-api.use(cors());
+// Replace this with your actual frontend URL
+const allowedOrigins = ['https://favemeal.netlify.app'];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+};
+
+api.use(cors(corsOptions));
 api.use(express.json());
 
 // Run migrations
