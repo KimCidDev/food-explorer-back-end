@@ -23,8 +23,8 @@ class PaymentController {
         quantity: item.quantity
       }));
 
-      const successURL = concatenateURL(process.env.CLIENT_URL, 'success');
-      const cancelURL = concatenateURL(process.env.CLIENT_URL, 'cancelPay');
+      const successURL = concatenateURL(process.env.CLIENT_URL, 'paydone');
+      const cancelURL = concatenateURL(process.env.CLIENT_URL, 'payfail');
 
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
