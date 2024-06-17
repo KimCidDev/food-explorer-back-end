@@ -9,7 +9,7 @@ const uploadConfig = require('./configs/upload');
 const knex = require('./database/knex');
 
 const api = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5555;
 
 // Replace this with your actual frontend URL
 const allowedOrigins = ['https://favemeal.netlify.app'];
@@ -33,7 +33,12 @@ knex.migrate
   .then(() => console.log('Database migrated'))
   .catch(error => console.error('Migration failed:', error));
 
-api.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`));
+// Add more detailed logging
+api.listen(PORT, () => {
+  console.log(`Server is running on PORT ${PORT}`);
+  console.log(`Environment: ${process.env.NODE_ENV}`);
+  console.log(`Client URL: ${process.env.CLIENT_URL}`);
+});
 
 api.use('/files', express.static(uploadConfig.UPLOADS_FOLDER));
 api.use(routes);
