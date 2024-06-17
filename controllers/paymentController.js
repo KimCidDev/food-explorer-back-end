@@ -5,6 +5,12 @@ class PaymentController {
   async createCheckoutSession(request, response) {
     const { items } = request.body;
 
+    const concatenateURL = (baseURL, path) => {
+      if (!baseURL.endsWith('/')) baseURL += '/';
+      if (path.startsWith('/')) path = path.substring(1);
+      return baseURL + path;
+    };
+
     try {
       const lineItems = items.map(item => ({
         price_data: {
@@ -12,13 +18,13 @@ class PaymentController {
           product_data: {
             name: item.name
           },
-          unit_amount: item.price // Ensure price is in cents
+          unit_amount: item.price
         },
         quantity: item.quantity
       }));
 
-      const successURL = `${process.env.CLIENT_URL}success`;
-      const cancelURL = `${process.env.CLIENT_URL}cancelpay`;
+      const successURL = concatenateURL(process.env.CLIENT_URL, 'success');
+      const cancelURL = concatenateURL(process.env.CLIENT_URL, 'cancelPay');
 
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
