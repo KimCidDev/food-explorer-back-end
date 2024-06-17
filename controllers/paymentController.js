@@ -10,9 +10,10 @@ class PaymentController {
         payment_method_types: ['card'],
         line_items: items.map(item => ({
           price_data: {
-            currency: 'usd',
+            currency: 'cad',
             product_data: {
-              name: item.name
+              name: item.name,
+              id: item.id
             },
             unit_amount: item.price * 100
           },
