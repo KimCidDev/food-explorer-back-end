@@ -18,13 +18,13 @@ class PaymentController {
           product_data: {
             name: item.name
           },
-          unit_amount: item.price // Ensure price is in cents
+          unit_amount: item.price
         },
         quantity: item.quantity
       }));
 
-      const successURL = concatenateURL(process.env.CLIENT_URL, 'success');
-      const cancelURL = concatenateURL(process.env.CLIENT_URL, 'cancelPay');
+      const successURL = concatenateURL(process.env.CLIENT_URL, '/success');
+      const cancelURL = concatenateURL(process.env.CLIENT_URL, '/cancelPay');
 
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
